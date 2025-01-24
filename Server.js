@@ -1,6 +1,6 @@
+const router = require("./Router/StoreRouter")
 const PORT =4040
 const express = require("express")
-const router = require("./Router/StoreRouter")
 
 const app =express()
 app.use(express.json())
