@@ -1,5 +1,5 @@
-const { where } = require('sequelize');
-const { products } = require('../models/products')
+const productModel = require('../models/products')
+const storeModel = require('../models/stores')
 const {v4:uuidv4} = require('uuid')
 
 // CRUD OPERATION
@@ -16,7 +16,7 @@ exports.createProducts = async (req, res) => {
         }
         console.log(data);
         
-        const newProducts = await products.create(data)
+        const newProducts = await productModel.create(data)
         res.status(201).json({ message: "new products created successfully", newProducts })
 
     } catch (error) {
@@ -26,7 +26,7 @@ exports.createProducts = async (req, res) => {
 // get all product
 exports.getAll = async (req, res) => {
     try {
-        getProductsInfo = await products.findAll()
+        getProductsInfo = await productModel.findAll()
         res.status(200).json({ message: 'all the products below' })
     } catch (error) {
         res.status(500).json({ message: "internal server error" + error.message })
@@ -36,7 +36,7 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        getOneProducts = await products.findByPk(req.params.id)
+        getOneProducts = await productModel.findByPk(req.params.id)
         if (!getOneProducts) {
 
             res.status(400).json({ message: 'products not found' })
@@ -50,7 +50,7 @@ exports.getOne = async (req, res) => {
 // update a product
 exports.updateStore = async (req, res) => {
     try {
-        const store = await stores.findByPk(req.params.id);
+        const store = await storeModel.findByPk(req.params.id);
         if (!store) {
             return res.status(404).json({ message: 'store not found' });
         }
@@ -66,7 +66,7 @@ exports.updateStore = async (req, res) => {
 // delete a product
 exports.deleteOne = async (req, res) => {
     try {
-        const product = await products.findByPk(req.params.id)
+        const product = await productModel.findByPk(req.params.id)
         if (!product) {
             res.status(400).json({ message: 'products not found' })
         }

@@ -1,4 +1,4 @@
-const stores = require("../models/stores");
+const storeModel = require("../models/stores");
 const {v4:uuidv4} = require('uuid')
 
 exports.createUser = async (req, res) => {
@@ -9,7 +9,7 @@ exports.createUser = async (req, res) => {
             location: req.body.location,
             email: req.body.email
         }
-        const createUserInfo = await stores.create(data);
+        const createUserInfo = await storeModel.create(data);
         
         res.status(201).json({ message: "New store created successfully", data: createUserInfo });
     } catch (error) {
@@ -21,7 +21,7 @@ exports.createUser = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const createUserInfo = await stores.findAll();
+        const createUserInfo = await storeModel.findAll();
         res.status(201).json({ message: "all the students below", data: createUserInfo });
     } catch (error) {
         console.log(error);
@@ -31,11 +31,11 @@ exports.getAll = async (req, res) => {
 
 exports.getOne = async (req, res) => {
     try {
-        const store = await stores.findByPk(req.params.id);
+        const store = await storeModel.findByPk(req.params.id);
         if (!store) {
             return res.status(400).json({ message: 'store not found' });
         }
-        const createUserInfo = await stores.findByPk(req.params.id);
+        const createUserInfo = await storeModel.findByPk(req.params.id);
         res.status(201).json({ message: " students with the below id", data: createUserInfo });
     } catch (error) {
         console.log(error);
@@ -45,11 +45,11 @@ exports.getOne = async (req, res) => {
 
 exports.updateStore = async (req, res) => {
     try {
-        const store = await stores.findByPk(req.params.id);
+        const store = await storeModel.findByPk(req.params.id);
         if (!store) {
             return res.status(404).json({ message: 'store not found' });
         }
-        const newInfo = await stores.update({
+        const newInfo = await storeModel.update({
             storeName: req.body.storeName,
             location: req.body.location
         }, { where: { id: req.params.id } });
@@ -60,11 +60,11 @@ exports.updateStore = async (req, res) => {
 }
 exports.deleteStore = async (req, res) => {
     try {
-        const store = await stores.findByPk(req.params.id);
+        const store = await storeModel.findByPk(req.params.id);
         if (!store) {
             return res.status(400).json({ message: 'store not found' });
         }
-        await stores.destroy({ where: { id: store.id } });
+        await storeModel.destroy({ where: { id: store.id } });
         res.status(200).json("store deleted successfully");
     } catch (error) {
         res.status(500).json({ error: error.message });
