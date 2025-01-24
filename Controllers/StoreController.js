@@ -1,5 +1,5 @@
 const stores = require("../models/stores");
-const { v4: uuidv4 } = require('uuid');
+const {v4:uuidv4} = require('uuid')
 
 exports.createUser = async (req, res) => {
     try {

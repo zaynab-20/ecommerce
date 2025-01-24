@@ -1,6 +1,6 @@
 const { where } = require('sequelize');
 const { products } = require('../models/products')
-const { v4: uuidv4 } = require('uuid')
+const {v4:uuidv4} = require('uuid')
 
 // CRUD OPERATION
 // create/post a product
